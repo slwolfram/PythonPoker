@@ -20,7 +20,7 @@ class Deck(object):
         res = []
         for card in self.cards:
             res.append(str(card))
-        return '\n'.join(res)
+        return ','.join(res)
 
     def add_card(self, card):
         """Adds a card to the deck"""
@@ -45,4 +45,4 @@ class Deck(object):
     def move_cards(self, hand, num):
         """Moves the given number of cards from the deck into the Hand.:"""
         for i in range(num):
-            hand.add_card(self.pop_card())
+            hand.append(self.pop_card())

@@ -6,8 +6,8 @@ def main():
 
     players = []
     for i in range(0, 6):
-        players.append(Player("Player {}".format(i), 10000))
-    Game(6, players, [500, 1000])
+        players.append(Player(name="P{}".format(i+1), cash=10000, hand=[]))
+    Game(6, players, [100, 200])
 
 
 if __name__ == "__main__":

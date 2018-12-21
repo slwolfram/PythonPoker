@@ -1,10 +1,11 @@
 from deck import Deck
 from card import Card
 from player import Player
+import hand_evaluator
 import random
 import json
 import copy
-import hand_evaluator
+import asyncio
 
 class Game(object):
 
@@ -29,10 +30,12 @@ class Game(object):
         self.blinds = kwargs["blinds"]
         self.quitting = False
         self.first_turn = False
-        input("Starting game. Press enter to continue...")
-        self.start()
 
-    def start(self):
+    async def play(self):
+        print("waiting for start conditions...")
+        self.players.append(Player(id=0, name="Hans Hermann Hoppe", cash=10000, hand=[]))
+        while (len(self.players) < 2):
+            await asyncio.sleep(0.001)
         self.set_initial_positions()
         self.reset_game()
         while (self.quitting == False):
@@ -112,7 +115,6 @@ class Game(object):
                     self.collect_pot(winners)
                     self.print_state()
                     input("end of round- HERE")
-                         
 
     def collect_pot(self, winning_players):
         for player in winning_players:
@@ -320,14 +322,16 @@ class Game(object):
             deck_list.append(card.asdict())
         for card in self.board:
             board_list.append(card.asdict())
-        
+        active_p = None
+        if (self.active_player != None):
+            active_p = self.active_player.asdict()
         return {'id' : self.id,
             'max_table_size' : self.max_table_size,
             'table_name': self.table_name,
             'players' : player_list,
             'deck' : deck_list,
             'round' : self.round,
-            'active_player' : self.active_player.asdict(),
+            'active_player' : active_p,
             'board' : board_list,
             'pot' : self.pot,
             'highest_bet' : self.highest_bet,

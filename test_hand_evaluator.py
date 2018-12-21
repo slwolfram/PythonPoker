@@ -1,5 +1,5 @@
-from player import Player
 from card import Card
+from player import Player
 import hand_evaluator
 
 

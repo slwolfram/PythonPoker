@@ -70,7 +70,7 @@ class Player(object):
 
         hand_list = []
         for card in self.hand:
-            hand_list.append(card.asdict)
+            hand_list.append(card.asdict())
 
         return {
             'id': self.id,
